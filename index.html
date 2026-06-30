@@ -80,18 +80,22 @@
     /* ── SLIDE SYSTEM ─────────────────────────────────────── */
     .stage {
       position: relative; z-index: 10;
-      width: 100%; height: 100vh;
+      width: 100%; height: 100vh; height: 100dvh;
       display: flex; align-items: center; justify-content: center;
     }
 
     .slide {
       position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: flex-start;
       padding: 24px;
+      overflow-y: auto; -webkit-overflow-scrolling: touch;
       opacity: 0; pointer-events: none;
       transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
       transform: translateY(28px);
     }
+    /* card centres vertically when it fits, and scrolls (never clips) when taller than the screen */
+    .slide > .card { margin-top: auto; margin-bottom: auto; flex-shrink: 0; }
     .slide.active {
       opacity: 1; pointer-events: all;
       transform: translateY(0);
@@ -908,11 +912,27 @@
 
     /* ── RESPONSIVE ───────────────────────────────────────── */
     @media (max-width: 480px) {
-      .card { padding: 36px 28px; border-radius: 22px; }
+      .slide { padding: 16px 12px; }
+      .card { padding: 30px 24px; border-radius: 22px; }
       .gc-amount { font-size: 34px; }
       .lulu-word { font-size: 26px; }
       .lulu-mark { width: 37px; height: 37px; }
       .lulu-amount b { font-size: 25px; }
+
+      /* itinerary: compress so it fits a phone without scrolling (and stays scrollable if needed) */
+      .itin-page { padding: 22px 18px; }
+      .itin-page .eyebrow { margin-bottom: 6px; }
+      .itin-title { font-size: clamp(1.5rem, 7vw, 1.9rem); margin-bottom: 8px; }
+      .itin-hint { font-size: 9.5px; gap: 5px; margin: 0 1px 8px 0; }
+      .itin-hint svg { width: 11px; height: 11px; }
+      .itin-page .itin-list { margin-bottom: 14px; }
+      .itin-page .itin-item { gap: 11px; padding: 8px 0; }
+      .itin-page .itin-day { font-size: 20px; min-width: 32px; }
+      .itin-page .itin-day sub { font-size: 8.5px; }
+      .itin-page .itin-loc { font-size: 13.5px; margin-bottom: 1px; }
+      .itin-page .itin-note { font-size: 11.5px; line-height: 1.4; }
+      .itin-page .day-shot { width: 46px; height: 46px; border-radius: 11px; }
+      .itin-page .btn-group .btn, .itin-page .btn { padding: 13px 14px; font-size: 12.5px; }
     }
 
     /* ── REDUCED MOTION ───────────────────────────────────── */
@@ -1143,7 +1163,7 @@
           <div class="itin-day">1<sub>DAY</sub></div>
           <div class="itin-detail">
             <div class="itin-loc">Fly into Zürich → Lucerne</div>
-            <div class="itin-note">Land in Zürich, train down to Lucerne — first night by the lake.</div>
+            <div class="itin-note">Train from Zürich — first night by the lake.</div>
           </div>
           <div class="day-shots">
             <button class="day-shot" data-img="day1-lucerne.jpg.JPG" data-caption="Day 1 · Lucerne">
@@ -1157,7 +1177,7 @@
           <div class="itin-day">2<sub>DAY</sub></div>
           <div class="itin-detail">
             <div class="itin-loc">Train to Interlaken</div>
-            <div class="itin-note">Our base for a few nights. Down to turquoise Lake Brienz.</div>
+            <div class="itin-note">Our base, on turquoise Lake Brienz.</div>
           </div>
           <div class="day-shots">
             <button class="day-shot" data-img="day2-brienz.jpg.WEBP" data-caption="Day 2 · Lake Brienz">
@@ -1171,7 +1191,7 @@
           <div class="itin-day">3<sub>DAY</sub></div>
           <div class="itin-detail">
             <div class="itin-loc">Oeschinensee lake hike</div>
-            <div class="itin-note">The big hike up to the glacier-fed mountain lake.</div>
+            <div class="itin-note">The big hike to the glacier-fed lake.</div>
           </div>
           <div class="day-shots">
             <button class="day-shot" data-img="day3-oeschinensee.webp.JPG" data-caption="Day 3 · Oeschinensee">
@@ -1199,7 +1219,7 @@
           <div class="itin-day">5<sub>DAY</sub></div>
           <div class="itin-detail">
             <div class="itin-loc">Lauterbrunnen & Mürren</div>
-            <div class="itin-note">The waterfall valley, then the cliffside hike to Mürren.</div>
+            <div class="itin-note">Waterfall valley, then the cliff path to Mürren.</div>
           </div>
           <div class="day-shots">
             <button class="day-shot" data-img="day5-mannlichen.jpg.AVIF" data-caption="Day 5 · Männlichen">
@@ -1213,7 +1233,7 @@
           <div class="itin-day">6<sub>DAY</sub></div>
           <div class="itin-detail">
             <div class="itin-loc">Geneva → home</div>
-            <div class="itin-note">Slow morning, travel to Geneva, evening flight home.</div>
+            <div class="itin-note">Slow morning in Geneva, evening flight home.</div>
           </div>
           <div class="day-shots">
             <button class="day-shot" data-img="day6-geneva.jpg.JPG" data-caption="Day 6 · Geneva">
