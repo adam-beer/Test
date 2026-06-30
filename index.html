@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Ally 🤍</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lato:wght@300;400;700;900&family=Montserrat:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ivory:   #FAF8F5;
+      --sage:    #8BA89A;
+      --sage-lt: #C5D9D1;
+      --blue:    #B8D4E3;
+      --gold:    #54909E;
+      --gold-lt: #B7D4DA;
+      --slate:   #2D3E50;
+      --muted:   #6B7F8A;
+      --white10: rgba(255,255,255,0.10);
+      --white20: rgba(255,255,255,0.20);
+      --white60: rgba(255,255,255,0.60);
+      --white80: rgba(255,255,255,0.80);
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      color: var(--slate);
+      background: #d6e8f0;
+    }
+
+    /* ── BACKGROUND ───────────────────────────────────────── */
+    .bg {
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(184,212,227,0.70) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 90%, rgba(197,217,209,0.65) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 60% 40%, rgba(84,144,158,0.18) 0%, transparent 55%),
+        linear-gradient(160deg, #e8f2f7 0%, #deeee7 40%, #f5f0e8 100%);
+      animation: bgShift 18s ease-in-out infinite alternate;
+    }
+    @keyframes bgShift {
+      0%   { filter: hue-rotate(0deg) brightness(1); }
+      100% { filter: hue-rotate(8deg)  brightness(1.04); }
+    }
+
+    /* floating blobs */
+    .blob {
+      position: fixed; border-radius: 50%; filter: blur(70px);
+      pointer-events: none; z-index: 0; opacity: 0.45;
+      animation: blobDrift 20s ease-in-out infinite alternate;
+    }
+    .blob-1 { width: 500px; height: 500px; background: var(--blue);   top: -15%; left: -10%; animation-delay: 0s; }
+    .blob-2 { width: 400px; height: 400px; background: var(--sage-lt); bottom: -10%; right: -8%; animation-delay: -7s; }
+    .blob-3 { width: 280px; height: 280px; background: var(--gold-lt); top: 40%; left: 55%; animation-delay: -13s; }
+    @keyframes blobDrift {
+      0%   { transform: translate(0,0) scale(1); }
+      100% { transform: translate(30px,40px) scale(1.08); }
+    }
+
+    /* ── SNOWFLAKE PARTICLES ──────────────────────────────── */
+    .particles { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+    .particle {
+      position: absolute; top: -10px; border-radius: 50%;
+      background: rgba(255,255,255,0.6);
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      0%   { transform: translateY(-10px) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ── SLIDE SYSTEM ─────────────────────────────────────── */
+    .stage {
+      position: relative; z-index: 10;
+      width: 100%; height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .slide {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+      transform: translateY(28px);
+    }
+    .slide.active {
+      opacity: 1; pointer-events: all;
+      transform: translateY(0);
+    }
+    .slide.exit-up {
+      opacity: 0; pointer-events: none;
+      transform: translateY(-28px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    /* ── GLASS CARD ───────────────────────────────────────── */
+    .card {
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(22px) saturate(1.4);
+      -webkit-backdrop-filter: blur(22px) saturate(1.4);
+      border: 1px solid rgba(255,255,255,0.85);
+      border-radius: 28px;
+      box-shadow: 0 8px 48px rgba(45,62,80,0.12), 0 2px 12px rgba(45,62,80,0.06);
+      padding: 52px 48px;
+      max-width: 560px; width: 100%;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 60%);
+      border-radius: 28px; pointer-events: none;
+    }
+
+    /* ── TYPOGRAPHY ───────────────────────────────────────── */
+    .eyebrow {
+      font-family: 'Lato', sans-serif;
+      font-weight: 400; font-size: 11px;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 18px;
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300; font-size: clamp(2.6rem, 7vw, 3.6rem);
+      line-height: 1.12; color: var(--slate);
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300; font-size: clamp(2rem, 6vw, 3rem);
+      line-height: 1.15; color: var(--slate);
+      margin-bottom: 18px;
+    }
+    .subtitle {
+      font-size: 15px; line-height: 1.7;
+      color: var(--muted); margin-bottom: 36px;
+    }
+    .large-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 12vw, 6rem);
+      font-weight: 300; line-height: 1;
+      color: var(--slate); margin-bottom: 8px;
+    }
+    .destination {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: clamp(1.4rem, 4vw, 1.9rem);
+      color: var(--gold); font-weight: 400;
+    }
+
+    /* ── BUTTONS ──────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 15px 36px;
+      font-family: 'Lato', sans-serif; font-weight: 400;
+      font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
+      border: none; border-radius: 50px; cursor: pointer;
+      text-decoration: none; transition: all 0.25s ease;
+      position: relative; overflow: hidden;
+    }
+    .btn::after {
+      content: ''; position: absolute; inset: 0; border-radius: 50px;
+      background: rgba(255,255,255,0.2); opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .btn:hover::after { opacity: 1; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,62,80,0.18); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--slate) 0%, #3d5468 100%);
+      color: white;
+      box-shadow: 0 4px 16px rgba(45,62,80,0.25);
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold) 0%, #3B7B89 100%);
+      color: white;
+      box-shadow: 0 4px 16px rgba(84,144,158,0.35);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid rgba(45,62,80,0.25);
+      color: var(--slate);
+    }
+    .btn-outline:hover { border-color: var(--slate); background: rgba(45,62,80,0.05); }
+
+    .btn-group { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+
+    /* ── DIVIDER ──────────────────────────────────────────── */
+    .divider {
+      width: 40px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 24px auto;
+    }
+
+    /* ── GIFT CARD FAKE ───────────────────────────────────── */
+    .gift-card {
+      width: 100%; max-width: 340px;
+      aspect-ratio: 1.586;
+      margin: 0 auto 32px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.28), 0 2px 8px rgba(0,0,0,0.15);
+      display: flex; flex-direction: column;
+      align-items: flex-start; justify-content: space-between;
+      padding: 20px 24px;
+      position: relative; overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .gift-card:hover { transform: scale(1.02) rotate(-0.5deg); box-shadow: 0 24px 64px rgba(0,0,0,0.32); }
+    .gift-card::before {
+      content: '';
+      position: absolute; top: -40%; right: -20%;
+      width: 280px; height: 280px; border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      pointer-events: none;
+    }
+    .gift-card::after {
+      content: '';
+      position: absolute; bottom: -30%; left: -10%;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+    .gc-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 500;
+      color: white; letter-spacing: 0.12em;
+      z-index: 1;
+    }
+    .gc-amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px; font-weight: 300;
+      color: white; line-height: 1;
+      z-index: 1;
+    }
+    .gc-amount span { font-size: 22px; vertical-align: top; margin-top: 8px; display: inline-block; }
+    .gc-label {
+      font-size: 11px; letter-spacing: 0.2em; color: rgba(255,255,255,0.55);
+      text-transform: uppercase; z-index: 1;
+    }
+    .gc-tap-hint {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.0);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .gift-card:hover .gc-tap-hint {
+      opacity: 1;
+      background: rgba(0,0,0,0.22);
+    }
+    .gc-tap-hint { z-index: 5; }
+    .gc-tap-hint span {
+      font-family: 'Lato', sans-serif; font-size: 12px;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: white; font-weight: 400;
+    }
+
+    /* ── LULULEMON GIFT CARD ──────────────────────────────── */
+    .lulu-card {
+      background: linear-gradient(155deg, #27416b 0%, #1c2b48 52%, #15203a 100%);
+      padding: 0;
+    }
+    .lulu-card::before, .lulu-card::after { display: none; }
+    .lulu-waves {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      z-index: 0; pointer-events: none;
+    }
+    .lulu-amount {
+      position: absolute; top: 16px; right: 36px; z-index: 4;
+      text-align: right; color: #fff; line-height: 1;
+    }
+    .lulu-amount b {
+      display: block; font-family: 'Montserrat', sans-serif; font-weight: 800;
+      font-size: 32px; letter-spacing: 0;
+    }
+    .lulu-amount span {
+      display: block; font-family: 'Montserrat', sans-serif; font-weight: 600;
+      font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase;
+      margin-top: 5px; color: rgba(255,255,255,0.92);
+    }
+    .lulu-logo {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      z-index: 2; display: flex; align-items: center; gap: 10px;
+    }
+    .lulu-mark { width: 44px; height: 44px; flex-shrink: 0; }
+    .lulu-word {
+      font-family: 'Lato', sans-serif; font-weight: 900;
+      font-size: 31px; color: #fff; letter-spacing: -0.015em;
+    }
+    .lulu-footer {
+      position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+      z-index: 2; white-space: nowrap;
+      font-family: 'Lato', sans-serif; font-weight: 400; font-size: 8.5px;
+      letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.8);
+    }
+    /* the real uploaded card image (covers the recreation when present) */
+    .lulu-photo {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; border-radius: inherit; z-index: 3;
+      display: block;
+      /* image is cropped tight to the card; tiny zoom hides its rounded-corner edges */
+      transform: scale(1.05);
+    }
+
+    /* ── BIRTHDAY GREETING (slide 1) ──────────────────────── */
+    .bday-greeting {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400; font-size: clamp(1.8rem, 5.5vw, 2.5rem);
+      line-height: 1.15; color: var(--slate);
+      margin-bottom: 26px; letter-spacing: 0.005em;
+    }
+    .bday-greeting span { font-style: italic; color: var(--gold); }
+
+    /* ── REDEEM LOADING OVERLAY (slide 1 → 2) ─────────────── */
+    .redeem-overlay {
+      position: fixed; inset: 0; z-index: 300;
+      display: flex; align-items: center; justify-content: center;
+      background:
+        radial-gradient(ellipse 70% 60% at 30% 18%, rgba(184,212,227,0.9) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 70% at 75% 88%, rgba(197,217,209,0.85) 0%, transparent 60%),
+        linear-gradient(160deg, #e8f2f7 0%, #deeee7 42%, #f5f0e8 100%);
+      opacity: 0; visibility: hidden; pointer-events: none;
+      /* slow, calm fade when handing off to the reveal */
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+    .redeem-overlay.show { opacity: 1; visibility: visible; pointer-events: auto; }
+    .redeem-inner { text-align: center; padding: 0 24px; }
+    .redeem-spinner {
+      width: 52px; height: 52px; margin: 0 auto 24px;
+      border-radius: 50%;
+      border: 3px solid rgba(45,62,80,0.12);
+      border-top-color: var(--gold);
+      animation: spin 0.9s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .redeem-label {
+      font-family: 'Lato', sans-serif; font-size: 12px; font-weight: 400;
+      letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold);
+    }
+
+    /* ── GIFT OPEN BUTTON (shaking) ───────────────────────── */
+    .gift-open-btn {
+      background: none; border: none; cursor: pointer;
+      display: inline-flex; flex-direction: column; align-items: center; gap: 18px;
+      padding: 8px;
+    }
+    .gift-box {
+      display: inline-flex;
+      transform-origin: 50% 80%;
+      animation: giftShake 2.4s ease-in-out infinite;
+      will-change: transform;
+    }
+    /* static glow wrapper so the shadow isn't re-rasterized every frame */
+    .gift-box-wrap {
+      display: inline-flex;
+      border-radius: 50%;
+      box-shadow: 0 12px 22px rgba(84,144,158,0.30);
+      padding: 4px;
+    }
+    .gift-open-btn:hover .gift-box {
+      animation-duration: 0.6s; /* shakes harder on hover, like it can't wait */
+    }
+    @keyframes giftShake {
+      0%, 64%, 100% { transform: rotate(0deg) translateY(0); }
+      68% { transform: rotate(-9deg) translateY(-2px); }
+      72% { transform: rotate(8deg)  translateY(-3px); }
+      76% { transform: rotate(-7deg) translateY(-2px); }
+      80% { transform: rotate(6deg)  translateY(-2px); }
+      84% { transform: rotate(-4deg) translateY(-1px); }
+      88% { transform: rotate(3deg)  translateY(0); }
+      92% { transform: rotate(-1deg); }
+    }
+    .gift-open-label {
+      font-family: 'Lato', sans-serif; font-weight: 400;
+      font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: white;
+      background: linear-gradient(135deg, var(--gold) 0%, #3B7B89 100%);
+      padding: 14px 34px; border-radius: 50px;
+      box-shadow: 0 4px 16px rgba(84,144,158,0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .gift-open-btn:hover .gift-open-label {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(84,144,158,0.45);
+    }
+    .gift-open-btn:active .gift-open-label { transform: translateY(0); }
+
+    /* gift box appears only after the message has typed out */
+    .gift-open-reveal {
+      opacity: 0; transform: translateY(14px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .gift-open-reveal.show { opacity: 1; transform: none; }
+
+    /* ── GIFT-OPENING SCENE (slide 3) ─────────────────────── */
+    .gift-scene {
+      position: relative;
+      width: 100%; height: 320px;
+      margin: 4px auto 8px;
+    }
+    .gift-scene > * { position: absolute; left: 50%; }
+
+    /* radial light burst behind the box */
+    .gscene-glow {
+      top: 56%; transform: translate(-50%,-50%) scale(.3);
+      width: 320px; height: 320px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(183,212,218,0.9) 0%, rgba(84,144,158,0.35) 35%, transparent 70%);
+      opacity: 0; z-index: 0; pointer-events: none;
+    }
+
+    /* the box */
+    .box-back, .box-front, .box-lid { transform: translateX(-50%); }
+    .box-back {
+      bottom: 36px; width: 168px; height: 104px; border-radius: 6px;
+      background: linear-gradient(160deg, #A6C8CF 0%, #54909E 50%, #3B7B89 100%);
+      z-index: 1;
+    }
+    .box-front {
+      bottom: 36px; width: 168px; height: 60px; border-radius: 0 0 6px 6px;
+      background: linear-gradient(180deg, #56929F 0%, #3B7B89 100%);
+      z-index: 3;
+      box-shadow: inset 0 14px 18px -10px rgba(0,0,0,0.35);
+    }
+    /* vertical ribbon down the front */
+    .box-front::before {
+      content: ''; position: absolute; left: 50%; transform: translateX(-50%);
+      top: 0; width: 26px; height: 100%;
+      background: linear-gradient(180deg, #FAF8F5, #ece3d2);
+      opacity: 0.92;
+    }
+    .box-lid {
+      bottom: 128px; width: 186px; height: 32px; border-radius: 6px;
+      background: linear-gradient(160deg, #A6C8CF 0%, #56929F 100%);
+      z-index: 4;
+      box-shadow: 0 6px 14px rgba(45,62,80,0.18);
+    }
+    .box-lid::before { /* horizontal ribbon on lid */
+      content: ''; position: absolute; left: 50%; transform: translateX(-50%);
+      top: 0; width: 26px; height: 100%;
+      background: linear-gradient(180deg, #FAF8F5, #ece3d2); opacity: 0.92;
+    }
+    .box-lid::after { /* bow knot */
+      content: ''; position: absolute; left: 50%; top: -9px; transform: translateX(-50%);
+      width: 16px; height: 16px; border-radius: 50%;
+      background: #FAF8F5; box-shadow: 0 1px 4px rgba(45,62,80,0.25);
+    }
+
+    /* ── BOARDING PASSES ──────────────────────────────────── */
+    .ticket {
+      bottom: 70px; z-index: 2;
+      width: 236px; height: 132px;
+      transform-origin: 50% 100%;
+      transform: translate(-50%, 26px) scale(.7) rotate(0deg);
+      opacity: 0;
+      display: flex;
+      border-radius: 12px; overflow: hidden;
+      background: linear-gradient(135deg, #fffefb 0%, #f6efe2 100%);
+      box-shadow: 0 18px 34px rgba(45,62,80,0.22), 0 2px 6px rgba(45,62,80,0.12);
+      border: 1px solid rgba(84,144,158,0.4);
+    }
+    .ticket-main { flex: 1; padding: 11px 13px; display: flex; flex-direction: column; justify-content: space-between; }
+    .ticket-head { display: flex; align-items: center; justify-content: space-between; }
+    .airline { display: flex; align-items: center; gap: 5px; font-size: 9px; letter-spacing: 0.12em; color: var(--gold); font-weight: 700; }
+    .ticket-tag { font-family: 'Space Mono', monospace; font-size: 7px; letter-spacing: 0.16em; color: var(--muted); }
+    .ticket-route { display: flex; align-items: center; gap: 8px; }
+    .rt { text-align: center; }
+    .rt .code { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; line-height: 1; color: var(--slate); }
+    .rt .city { font-size: 7.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 1px; }
+    .rt-plane { flex: 1; display: flex; align-items: center; justify-content: center; opacity: 0.55; }
+    .rt-plane svg { width: 100%; max-width: 54px; }
+    .ticket-data { display: flex; gap: 10px; }
+    .ticket-data > div { display: flex; flex-direction: column; }
+    .ticket-data label { font-family: 'Space Mono', monospace; font-size: 6.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .ticket-data b { font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; color: var(--slate); letter-spacing: 0.04em; }
+    .ticket-stub {
+      width: 58px; flex-shrink: 0;
+      border-left: 2px dashed rgba(84,144,158,0.55);
+      background: linear-gradient(180deg, #f3ead8 0%, #ece0c8 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px;
+      padding: 8px 6px;
+    }
+    .barcode {
+      width: 38px; height: 50px;
+      background: repeating-linear-gradient(90deg,
+        #2D3E50 0 1.5px, transparent 1.5px 3px,
+        #2D3E50 3px 5px, transparent 5px 7px,
+        #2D3E50 7px 8px, transparent 8px 11px);
+    }
+    .stub-label { font-family: 'Space Mono', monospace; font-size: 7px; letter-spacing: 0.12em; color: var(--gold); font-weight: 700; }
+
+    /* perforation notches on the stub seam */
+    .ticket-stub::before, .ticket-stub::after {
+      content: ''; position: absolute; left: -6px; width: 11px; height: 11px;
+      border-radius: 50%; background: var(--ivory);
+      box-shadow: inset 0 0 0 1px rgba(84,144,158,0.3);
+    }
+    .ticket-stub::before { top: -6px; }
+    .ticket-stub::after  { bottom: -6px; }
+
+    /* reveal headline + cta under the scene */
+    .dest-line { opacity: 1; }
+    .type-headline { min-height: 1.2em; }
+    .tw-swiss { font-style: italic; color: var(--gold); }
+    .tw-caret {
+      display: inline-block; width: 2px; height: 0.9em;
+      background: var(--slate); margin-left: 2px; vertical-align: -0.05em;
+      animation: caretBlink 0.75s steps(1) infinite;
+    }
+    .tw-caret.gold { background: var(--gold); }
+    .tw-caret.gone { opacity: 0; animation: none; transition: opacity 0.4s ease; }
+    @keyframes caretBlink { 50% { opacity: 0; } }
+
+    .dest-sub { opacity: 0; transition: opacity 0.7s ease; }
+    .dest-sub.show { opacity: 1; }
+
+    .reveal-cta-wrap {
+      opacity: 0; margin-top: 6px; transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal-cta-wrap.show { opacity: 1; transform: none; }
+
+    /* ── OPENING SEQUENCE (plays when #slide-2 gets .opening) ─ */
+    #slide-2.opening .box-lid     { animation: lidOff   0.75s cubic-bezier(.5,-0.25,.4,1) 0.15s forwards; }
+    #slide-2.opening .gscene-glow { animation: glowBurst 1.0s ease-out 0.2s forwards; }
+    #slide-2.opening .box-back,
+    #slide-2.opening .box-front   { animation: boxSettle 0.5s ease 0.15s; }
+    #slide-2.opening .ticket-back { animation: ticketBack  0.95s cubic-bezier(.18,.7,.25,1.15) 0.42s forwards; }
+    #slide-2.opening .ticket-front{ animation: ticketFront 0.95s cubic-bezier(.18,.7,.25,1.15) 0.60s forwards; }
+
+    @keyframes lidOff {
+      to { transform: translateX(-50%) translateY(-168px) rotate(-15deg); opacity: 0; }
+    }
+    @keyframes glowBurst {
+      0%   { transform: translate(-50%,-50%) scale(.3); opacity: 0; }
+      28%  { opacity: 0.85; }
+      100% { transform: translate(-50%,-50%) scale(2.4); opacity: 0; }
+    }
+    @keyframes boxSettle {
+      0%   { margin-top: 0; }
+      45%  { margin-top: 5px; }
+      100% { margin-top: 0; }
+    }
+    @keyframes ticketBack {
+      0%   { transform: translate(-50%, 26px) scale(.7) rotate(0deg); opacity: 0; }
+      35%  { opacity: 1; }
+      100% { transform: translate(calc(-50% - 40px), -58px) scale(1) rotate(-8deg); opacity: 1; }
+    }
+    @keyframes ticketFront {
+      0%   { transform: translate(-50%, 26px) scale(.7) rotate(0deg); opacity: 0; }
+      35%  { opacity: 1; }
+      100% { transform: translate(calc(-50% + 34px), -40px) scale(1) rotate(7deg); opacity: 1; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* launch-pop when "Open your surprise" is clicked on slide 2 */
+    .gift-open-btn.launching .gift-box { animation: launchPop 0.45s ease forwards; }
+    .gift-open-btn.launching .gift-open-label { opacity: 0; transition: opacity .25s ease; }
+    @keyframes launchPop {
+      0%   { transform: scale(1); }
+      100% { transform: scale(1.9) translateY(-20px); opacity: 0; }
+    }
+
+    @media (max-width: 480px) {
+      .gift-scene { transform: scale(.78); height: 250px; margin-bottom: -8px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #slide-2 .box-lid { opacity: 0; }
+      #slide-2 .ticket-back  { transform: translate(calc(-50% - 40px), -58px) rotate(-8deg); opacity: 1; }
+      #slide-2 .ticket-front { transform: translate(calc(-50% + 34px), -40px) rotate(7deg);  opacity: 1; }
+      #slide-2 .dest-sub, #slide-2 .reveal-cta-wrap { opacity: 1 !important; transform: none !important; }
+      #slide-2 .tw-caret { display: none; }
+    }
+
+    /* ── SWISS CONFETTI CANNONS ───────────────────────────── */
+    .cannon-layer {
+      position: fixed; inset: 0; pointer-events: none; z-index: 130;
+      overflow: hidden;
+    }
+    /* muzzle flash at each cannon mouth */
+    .cannon-flash {
+      position: absolute; bottom: -6px; width: 120px; height: 120px;
+      border-radius: 50%; opacity: 0;
+      background: radial-gradient(circle, rgba(255,255,255,0.85) 0%, rgba(213,43,30,0.4) 40%, transparent 70%);
+      animation: flashPop 0.5s ease-out forwards;
+    }
+    .cannon-flash.left  { left: 4%; }
+    .cannon-flash.right { right: 4%; }
+    @keyframes flashPop {
+      0%   { opacity: 0; transform: scale(.3); }
+      30%  { opacity: 0.9; }
+      100% { opacity: 0; transform: scale(1.6); }
+    }
+
+    /* each piece = outer (horizontal travel) + inner bit (arc + spin) */
+    .cfx { position: absolute; bottom: -12px; animation: cfxX linear forwards; }
+    .cfx.left  { left: 5%; }
+    .cfx.right { right: 5%; }
+    @keyframes cfxX { to { transform: translateX(var(--dx)); } }
+
+    .cfx-bit { position: relative; animation: cfxY cubic-bezier(.22,.62,.5,1) forwards; }
+    @keyframes cfxY {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+      55%  { transform: translateY(var(--peak)) rotate(calc(var(--rot) / 2)); opacity: 1; }
+      82%  { opacity: 1; }
+      100% { transform: translateY(var(--drop)) rotate(var(--rot)); opacity: 0; }
+    }
+
+    /* little Swiss-flag pieces: red square + white cross */
+    .cfx-cross {
+      width: 13px; height: 13px; background: #D52B1E; border-radius: 2px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    }
+    .cfx-cross::before, .cfx-cross::after { content: ''; position: absolute; background: #fff; }
+    .cfx-cross::before { left: 50%; top: 2.5px; width: 3px; height: 8px;  transform: translateX(-50%); }
+    .cfx-cross::after  { top: 50%; left: 2.5px; height: 3px; width: 8px;  transform: translateY(-50%); }
+
+    /* ── TRIP CARD ────────────────────────────────────────── */
+    .trip-pills {
+      display: flex; gap: 10px; justify-content: center;
+      flex-wrap: wrap; margin-bottom: 28px;
+    }
+    .pill {
+      background: rgba(45,62,80,0.07);
+      border: 1px solid rgba(45,62,80,0.12);
+      border-radius: 50px;
+      padding: 6px 18px;
+      font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── ITINERARY ────────────────────────────────────────── */
+    .itin-list { text-align: left; margin-bottom: 28px; }
+    .itin-item {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 12px 0; border-bottom: 1px solid rgba(45,62,80,0.08);
+    }
+    .itin-item:last-child { border-bottom: none; }
+    .itin-day {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 300; color: var(--gold);
+      min-width: 44px; text-align: center; line-height: 1;
+      margin-top: 2px;
+    }
+    .itin-day sub { font-size: 10px; display: block; color: var(--muted); font-family: 'Lato', sans-serif; margin-top: 2px; }
+    .itin-detail { flex: 1; }
+    .itin-loc { font-size: 15px; color: var(--slate); font-weight: 400; margin-bottom: 2px; }
+    .itin-note { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    /* ── DAY PHOTO POPOUTS ────────────────────────────────── */
+    .day-shots { display: flex; gap: 8px; margin-top: 9px; flex-wrap: wrap; }
+    .day-shot {
+      position: relative; width: 48px; height: 48px; flex-shrink: 0;
+      border-radius: 11px; overflow: hidden; cursor: pointer; padding: 0;
+      border: 1px solid rgba(84,144,158,0.40);
+      background: rgba(84,144,158,0.10);
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .day-shot:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 18px rgba(45,62,80,0.18);
+      border-color: var(--gold);
+    }
+    .day-shot:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+    .day-shot-ico { position: absolute; inset: 0; margin: auto; width: 20px; height: 20px; color: var(--gold); }
+    .day-shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .day-shot img.missing { display: none; }
+
+    /* ── PHOTO LIGHTBOX ───────────────────────────────────── */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 400; padding: 24px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(21,32,46,0.74);
+      -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity .3s ease, visibility .3s ease;
+    }
+    .lightbox.show { opacity: 1; visibility: visible; pointer-events: auto; }
+    .lb-figure {
+      margin: 0; max-width: min(92vw, 860px); max-height: 86vh;
+      display: flex; flex-direction: column; align-items: center;
+      transform: scale(.94); transition: transform .35s cubic-bezier(.2,.8,.3,1.1);
+    }
+    .lightbox.show .lb-figure { transform: scale(1); }
+    .lb-figure img {
+      max-width: 100%; max-height: 76vh; object-fit: contain;
+      border-radius: 14px; box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+      display: block; background: rgba(255,255,255,0.06);
+    }
+    .lb-figure img.missing { display: none; }
+    .lb-missing {
+      display: none; width: min(78vw, 420px); aspect-ratio: 4/3;
+      border-radius: 14px; border: 1.5px dashed rgba(255,255,255,0.4);
+      align-items: center; justify-content: center; text-align: center;
+      color: rgba(255,255,255,0.85);
+      font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem;
+      padding: 24px;
+    }
+    .lb-missing.show { display: flex; }
+    .lb-caption {
+      margin-top: 16px; color: #fff; font-family: 'Lato', sans-serif;
+      font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; text-align: center;
+    }
+    .lb-close {
+      position: absolute; top: 20px; right: 22px; z-index: 1;
+      width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
+      background: rgba(255,255,255,0.14); border: none; color: #fff;
+      font-size: 24px; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s ease;
+    }
+    .lb-close:hover { background: rgba(255,255,255,0.28); }
+
+    /* ── ITINERARY (full page, no scroll, roomy & readable) ── */
+    .itin-page { padding: 36px 44px; max-width: 660px; }
+    .itin-page .eyebrow { margin-bottom: 9px; }
+    .itin-title { font-size: clamp(1.8rem, 5vw, 2.4rem); margin-bottom: 20px; }
+    .itin-page .itin-list { margin-bottom: 22px; }
+    .itin-page .itin-item { align-items: center; gap: 18px; padding: 12px 0; }
+    .itin-page .itin-day { font-size: 26px; min-width: 46px; }
+    .itin-page .itin-day sub { font-size: 10px; }
+    .itin-page .itin-detail { flex: 1; min-width: 0; }
+    .itin-page .itin-loc { font-size: 17px; margin-bottom: 2px; }
+    .itin-page .itin-note { font-size: 13.5px; line-height: 1.5; }
+    .itin-page .day-shots { margin: 0 0 0 auto; flex-shrink: 0; }
+    .itin-page .day-shot { width: 58px; height: 58px; border-radius: 13px; }
+    .itin-page .btn-group { flex-direction: row; flex-wrap: wrap; gap: 12px; }
+    .itin-page .btn-group .btn { flex: 1; min-width: 160px; padding: 14px 14px; font-size: 13px; }
+
+    /* ── FLIGHT INFO ──────────────────────────────────────── */
+    .flight-row {
+      display: flex; align-items: center; gap: 0;
+      background: rgba(45,62,80,0.04);
+      border: 1px solid rgba(45,62,80,0.10);
+      border-radius: 16px; padding: 20px;
+      margin-bottom: 14px; text-align: left;
+      position: relative;
+    }
+    .flight-col { flex: 1; }
+    .flight-code {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px; font-weight: 400; color: var(--slate); line-height: 1;
+    }
+    .flight-city { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; margin-top: 2px; }
+    .flight-arrow {
+      padding: 0 16px; text-align: center;
+    }
+    .flight-arrow svg { opacity: 0.4; }
+    .flight-meta {
+      font-size: 11px; color: var(--muted); letter-spacing: 0.08em;
+      margin-top: 4px; text-transform: uppercase;
+    }
+    .flight-badge {
+      position: absolute; top: -8px; right: 16px;
+      background: var(--gold);
+      color: white; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 50px;
+    }
+
+    /* ── LINK BUTTONS ─────────────────────────────────────── */
+    .icon-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 14px 28px;
+      background: rgba(255,255,255,0.75);
+      border: 1.5px solid rgba(45,62,80,0.15);
+      border-radius: 14px; cursor: pointer;
+      text-decoration: none; color: var(--slate);
+      font-size: 13px; letter-spacing: 0.08em;
+      transition: all 0.22s ease;
+      min-width: 200px;
+    }
+    .icon-btn:hover {
+      background: white;
+      border-color: var(--sage);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(45,62,80,0.10);
+    }
+    .icon-btn svg { flex-shrink: 0; }
+
+    /* large photo-album call-to-action */
+    .album-cta {
+      display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+      width: 100%; max-width: 380px;
+      padding: 18px 28px; margin: 6px auto 22px;
+      background: linear-gradient(135deg, var(--gold) 0%, #3B7B89 100%);
+      color: #fff; text-decoration: none;
+      border-radius: 16px;
+      font-family: 'Lato', sans-serif; font-weight: 700;
+      font-size: 15px; letter-spacing: 0.04em;
+      box-shadow: 0 8px 22px rgba(84,144,158,0.32);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .album-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(84,144,158,0.42); }
+    .album-cta svg { flex-shrink: 0; }
+    .stay-label {
+      font-size: 12px; color: var(--muted); letter-spacing: 0.14em;
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+    .icon-btn.is-tbc { opacity: 0.55; cursor: default; }
+    .icon-btn.is-tbc:hover { background: rgba(255,255,255,0.75); border-color: rgba(45,62,80,0.15); transform: none; box-shadow: none; }
+
+    /* large photo-album button with a Swiss-lake backdrop */
+    .album-hero {
+      position: relative; display: flex; align-items: center; justify-content: center;
+      width: 100%; max-width: 420px; height: 160px;
+      margin: 10px auto 26px;
+      border-radius: 20px; overflow: hidden;
+      text-decoration: none; color: #fff;
+      box-shadow: 0 14px 34px rgba(45,62,80,0.30);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .album-hero img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; z-index: 0;
+      transition: transform 0.5s ease;
+    }
+    .album-hero .album-scrim {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(180deg, rgba(21,32,46,0.18) 0%, rgba(21,32,46,0.30) 45%, rgba(21,32,46,0.62) 100%);
+    }
+    .album-hero .album-label {
+      position: relative; z-index: 2;
+      display: inline-flex; align-items: center; gap: 11px;
+      font-family: 'Lato', sans-serif; font-weight: 700;
+      font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.45);
+    }
+    .album-hero:hover { transform: translateY(-3px); box-shadow: 0 20px 44px rgba(45,62,80,0.40); }
+    .album-hero:hover img { transform: scale(1.06); }
+    .album-hero:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+    /* ── NAV DOTS ─────────────────────────────────────────── */
+    .nav-dots {
+      position: fixed; bottom: 32px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; gap: 8px; z-index: 20;
+    }
+    .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(45,62,80,0.25);
+      cursor: pointer; transition: all 0.3s ease;
+    }
+    .dot.active {
+      background: var(--slate); width: 22px; border-radius: 3px;
+    }
+
+    /* ── BACK BUTTON ──────────────────────────────────────── */
+    .back-btn {
+      position: fixed; top: 24px; left: 24px;
+      z-index: 20; cursor: pointer;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(45,62,80,0.12);
+      border-radius: 50px;
+      padding: 8px 16px 8px 12px;
+      display: none; align-items: center; gap: 6px;
+      font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); transition: all 0.22s ease;
+    }
+    .back-btn:hover { color: var(--slate); background: white; }
+    .back-btn.visible { display: flex; }
+
+    /* ── HEART PULSE ──────────────────────────────────────── */
+    .heart { animation: heartPulse 1.8s ease-in-out infinite; display: inline-block; }
+    @keyframes heartPulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.18); }
+    }
+
+    /* ── SHINE EFFECT ON REVEAL ───────────────────────────── */
+    @keyframes shine {
+      0%   { left: -100%; }
+      100% { left: 200%; }
+    }
+    .shine-once::after {
+      content: '';
+      position: absolute; top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+      transform: skewX(-20deg);
+      animation: shine 0.8s ease forwards;
+    }
+
+    /* ── SCROLL INSIDE CARD ───────────────────────────────── */
+    .card-scroll { max-height: 68vh; overflow-y: auto; scrollbar-width: none; }
+    .card-scroll::-webkit-scrollbar { display: none; }
+
+    /* ── RESPONSIVE ───────────────────────────────────────── */
+    @media (max-width: 480px) {
+      .card { padding: 36px 28px; border-radius: 22px; }
+      .gc-amount { font-size: 34px; }
+      .lulu-word { font-size: 26px; }
+      .lulu-mark { width: 37px; height: 37px; }
+      .lulu-amount b { font-size: 25px; }
+    }
+
+    /* ── REDUCED MOTION ───────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .gift-box, .bg, .blob, .particle, .heart { animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Background layers -->
+<div class="bg"></div>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+<div class="particles" id="particles"></div>
+<div class="cannon-layer" id="cannon"></div>
+
+<!-- Back button -->
+<button class="back-btn" id="backBtn" onclick="prevSlide()" aria-label="Go back">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M19 12H5M12 5l-7 7 7 7"/>
+  </svg>
+  Back
+</button>
+
+<!-- Redeem loading overlay (gift card → reveal) -->
+<div class="redeem-overlay" id="redeemOverlay" aria-hidden="true" role="status" aria-live="polite">
+  <div class="redeem-inner">
+    <div class="redeem-spinner" aria-hidden="true"></div>
+    <p class="redeem-label">Redeeming your gift…</p>
+  </div>
+</div>
+
+<!-- Photo lightbox (itinerary day popouts) -->
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Trip photo">
+  <button class="lb-close" id="lbClose" aria-label="Close photo">&times;</button>
+  <figure class="lb-figure">
+    <img id="lbImg" src="" alt="">
+    <div class="lb-missing" id="lbMissing">Photo coming soon&nbsp;✦</div>
+    <figcaption class="lb-caption" id="lbCaption"></figcaption>
+  </figure>
+</div>
+
+<!-- SLIDES -->
+<div class="stage">
+
+  <!-- ── SLIDE 0: Gift Card Tease ──────────────────────── -->
+  <div class="slide active" id="slide-0">
+    <div class="card">
+      <p class="bday-greeting">Happy Birthday, <span>Ally</span></p>
+      <div class="gift-card lulu-card" onclick="claimGift()" role="button" tabindex="0" aria-label="Tap to reveal your gift">
+        <svg class="lulu-waves" viewBox="0 0 320 200" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <pattern id="luluWave" width="40" height="20" patternUnits="userSpaceOnUse">
+              <path d="M0,11 C6.7,3 13.3,3 20,11 C26.7,19 33.3,19 40,11" fill="none" stroke="rgba(255,255,255,0.09)" stroke-width="1.1"/>
+            </pattern>
+          </defs>
+          <rect width="320" height="200" fill="url(#luluWave)"/>
+        </svg>
+
+
+        <div class="lulu-logo">
+          <svg class="lulu-mark" viewBox="0 0 80 80" aria-hidden="true">
+            <circle cx="40" cy="40" r="38" fill="#ffffff"/>
+            <path d="M40 16 C27 16 21.5 31 23.5 44 C24.5 50 27.5 54.5 32 57.5 C27.5 52 30 44 36 44.5 C40 45 40 50.5 40 57.5 C40 50.5 40 45 44 44.5 C50 44 52.5 52 48 57.5 C52.5 54.5 55.5 50 56.5 44 C58.5 31 53 16 40 16 Z" fill="#1c2b48"/>
+          </svg>
+          <span class="lulu-word">lululemon</span>
+        </div>
+
+        <div class="lulu-footer">SHOP IN-STORE AND ONLINE</div>
+
+        <!-- Your exact uploaded card. Save it next to this file as lululemon-card.png
+             (or .jpg). Until then, the recreation above shows as a fallback. -->
+        <img class="lulu-photo" src="lululemon-card.png" alt="lululemon gift card"
+             onerror="if(this.src.indexOf('.png')>-1){this.src='lululemon-card.jpg';}else{this.style.display='none';}">
+
+        <div class="gc-tap-hint"><span>Tap to reveal</span></div>
+      </div>
+      <button class="btn btn-primary" onclick="claimGift()" style="margin-top:28px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        Claim your gift
+      </button>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 1: The Reveal ───────────────────────────── -->
+  <div class="slide" id="slide-1">
+    <div class="card" id="revealCard">
+      <h1 class="type-headline tw1" style="margin-bottom:36px; min-height:2.3em;"><span class="tw1-text"></span><span class="tw1-caret tw-caret"></span></h1>
+
+      <!-- Shaking gift box button (revealed after the message types out) -->
+      <div class="gift-open-reveal">
+      <button class="gift-open-btn" onclick="openGift()" aria-label="Open your surprise">
+        <span class="gift-box-wrap" aria-hidden="true"><span class="gift-box">
+          <svg width="60" height="60" viewBox="0 0 64 64" fill="none">
+            <!-- box base -->
+            <rect x="10" y="26" width="44" height="30" rx="3" fill="#54909E"/>
+            <rect x="10" y="26" width="44" height="30" rx="3" fill="url(#gloss)"/>
+            <!-- lid -->
+            <rect x="6" y="20" width="52" height="12" rx="3" fill="#3B7B89"/>
+            <!-- vertical ribbon -->
+            <rect x="28" y="20" width="8" height="36" fill="#FAF8F5" opacity="0.92"/>
+            <!-- bow -->
+            <path d="M32 20c-6-10-18-8-16 0 1 4 10 4 16 0z" fill="#FAF8F5" opacity="0.95"/>
+            <path d="M32 20c6-10 18-8 16 0-1 4-10 4-16 0z" fill="#FAF8F5" opacity="0.95"/>
+            <circle cx="32" cy="20" r="3.5" fill="#B7D4DA"/>
+            <defs>
+              <linearGradient id="gloss" x1="10" y1="26" x2="54" y2="56" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#ffffff" stop-opacity="0.25"/>
+                <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </span></span>
+        <span class="gift-open-label">Open your surprise</span>
+      </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 2: Gift Opens → Boarding Passes ─────────── -->
+  <div class="slide" id="slide-2">
+    <div class="card">
+      <p class="eyebrow">Inside the box</p>
+
+      <div class="gift-scene" aria-hidden="true">
+        <div class="gscene-glow"></div>
+
+        <!-- two boarding passes (rise out of the box) -->
+        <div class="ticket ticket-back">
+          <div class="ticket-main">
+            <div class="ticket-head">
+              <span class="airline">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>
+                ALPINE AIR
+              </span>
+              <span class="ticket-tag">BOARDING PASS</span>
+            </div>
+            <div class="ticket-route">
+              <div class="rt"><div class="code">LON</div><div class="city">London</div></div>
+              <div class="rt-plane">
+                <svg viewBox="0 0 80 16" fill="none"><path d="M2 8h62" stroke="#8BA89A" stroke-width="1.4" stroke-dasharray="3 3"/><path d="M60 2l8 6-8 6" stroke="#54909E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="2" cy="8" r="2" fill="#8BA89A"/></svg>
+              </div>
+              <div class="rt"><div class="code">ZRH</div><div class="city">Zürich</div></div>
+            </div>
+            <div class="ticket-data">
+              <div><label>Passenger</label><b>ADAM</b></div>
+              <div><label>Date</label><b>30 JUL</b></div>
+              <div><label>Seat</label><b>1B</b></div>
+            </div>
+          </div>
+          <div class="ticket-stub">
+            <div class="barcode"></div>
+            <span class="stub-label">B-DAY</span>
+          </div>
+        </div>
+
+        <div class="ticket ticket-front">
+          <div class="ticket-main">
+            <div class="ticket-head">
+              <span class="airline">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>
+                ALPINE AIR
+              </span>
+              <span class="ticket-tag">BOARDING PASS</span>
+            </div>
+            <div class="ticket-route">
+              <div class="rt"><div class="code">LON</div><div class="city">London</div></div>
+              <div class="rt-plane">
+                <svg viewBox="0 0 80 16" fill="none"><path d="M2 8h62" stroke="#8BA89A" stroke-width="1.4" stroke-dasharray="3 3"/><path d="M60 2l8 6-8 6" stroke="#54909E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="2" cy="8" r="2" fill="#8BA89A"/></svg>
+              </div>
+              <div class="rt"><div class="code">ZRH</div><div class="city">Zürich</div></div>
+            </div>
+            <div class="ticket-data">
+              <div><label>Passenger</label><b>ALLY</b></div>
+              <div><label>Date</label><b>30 JUL</b></div>
+              <div><label>Seat</label><b>1A</b></div>
+            </div>
+          </div>
+          <div class="ticket-stub">
+            <div class="barcode"></div>
+            <span class="stub-label">B-DAY</span>
+          </div>
+        </div>
+
+        <!-- the gift box -->
+        <div class="box-back"></div>
+        <div class="box-front"></div>
+        <div class="box-lid"></div>
+      </div>
+
+      <div class="dest-line">
+        <h2 class="type-headline" style="font-size:clamp(1.7rem,5.5vw,2.4rem); margin-bottom:6px;"><span class="tw-text"></span><span class="tw-swiss"></span><span class="tw-caret"></span></h2>
+        <p class="subtitle dest-sub" style="margin-bottom:0;">…and then to <span style="font-style:italic;color:var(--gold);">Italy</span>.</p>
+      </div>
+
+      <div class="reveal-cta-wrap">
+        <div class="divider"></div>
+        <button class="btn btn-primary" onclick="goToSlide(3)">See full itinerary &nbsp;&rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 3: Itinerary ────────────────────────────── -->
+  <div class="slide" id="slide-3">
+    <div class="card itin-page">
+      <p class="eyebrow">The Plan</p>
+      <h2 class="itin-title">Day by day</h2>
+
+      <!--
+        PHOTO POPOUTS — drop images into C:\Users\hiitz\.claude\sessions\ matching
+        each button's data-img (and the thumbnail <img src>). Already in place:
+          day1-lucerne.jpg · day3-oeschinensee.webp · day4-grindelwald.webp · day5-mannlichen.jpg
+        Still placeholders (add these, or repoint data-img):
+          day2-brienz.jpg · day6-geneva.jpg
+        To change a photo: edit data-img + the <img src>. To relabel: edit data-caption.
+      -->
+      <div class="itin-list">
+
+        <div class="itin-item">
+          <div class="itin-day">1<sub>DAY</sub></div>
+          <div class="itin-detail">
+            <div class="itin-loc">Fly into Zürich → Lucerne</div>
+            <div class="itin-note">Land in Zürich, train down to Lucerne — first night by the lake.</div>
+          </div>
+          <div class="day-shots">
+            <button class="day-shot" data-img="day1-lucerne.jpg" data-caption="Day 1 · Lucerne">
+              <svg class="day-shot-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 16l-5-5L5 19"/></svg>
+              <img src="day1-lucerne.jpg" alt="">
+            </button>
+          </div>
+        </div>
+
+        <div class="itin-item">
+          <div class="itin-day">2<sub>DAY</sub></div>
+          <div class="itin-detail">
+            <div class="itin-loc">Train to Interlaken</div>
+            <div class="itin-note">Our base for a few nights. Down to turquoise Lake Brienz.</div>
+          </div>
+          <div class="day-shots">
+            <button class="day-shot" data-img="day2-brienz.jpg" data-caption="Day 2 · Lake Brienz">
+              <svg class="day-shot-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 16l-5-5L5 19"/></svg>
+              <img src="day2-brienz.jpg" alt="">
+            </button>
+          </div>
+        </div>
+
+        <div class="itin-item">
+          <div class="itin-day">3<sub>DAY</sub></div>
+          <div class="itin-detail">
+            <div class="itin-loc">Oeschinensee lake hike</div>
+            <div class="itin-note">The big hike up to the glacier-fed mountain lake.</div>
+          </div>
+          <div class="day-shots">
+            <button class="day-shot" data-img="day3-oeschinensee.webp" data-caption="Day 3 · Oeschinensee">
+              <svg class="day-shot-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 16l-5-5L5 19"/></svg>
+              <img src="day3-oeschinensee.webp" alt="">
+            </button>
+          </div>
+        </div>
+
+        <div class="itin-item">
+          <div class="itin-day">4<sub>DAY</sub></div>
+          <div class="itin-detail">
+            <div class="itin-loc">Grindelwald hike</div>
+            <div class="itin-note">Cable cars and a hike under the glaciers.</div>
+          </div>
+          <div class="day-shots">
+            <button class="day-shot" data-img="day4-grindelwald.webp" data-caption="Day 4 · Grindelwald">
+              <svg class="day-shot-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 16l-5-5L5 19"/></svg>
+              <img src="day4-grindelwald.webp" alt="">
+            </button>
+          </div>
+        </div>
+
+        <div class="itin-item">
+          <div class="itin-day">5<sub>DAY</sub></div>
+          <div class="itin-detail">
+            <div class="itin-loc">Lauterbrunnen & Mürren</div>
+            <div class="itin-note">The waterfall valley, then the cliffside hike to Mürren.</div>
+          </div>
+          <div class="day-shots">
+            <button class="day-shot" data-img="day5-mannlichen.jpg" data-caption="Day 5 · Männlichen">
+              <svg class="day-shot-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 16l-5-5L5 19"/></svg>
+              <img src="day5-mannlichen.jpg" alt="">
+            </button>
+          </div>
+        </div>
+
+        <div class="itin-item">
+          <div class="itin-day">6<sub>DAY</sub></div>
+          <div class="itin-detail">
+            <div class="itin-loc">Geneva → home</div>
+            <div class="itin-note">Slow morning, travel to Geneva, evening flight home.</div>
+          </div>
+          <div class="day-shots">
+            <button class="day-shot" data-img="day6-geneva.jpg" data-caption="Day 6 · Geneva">
+              <svg class="day-shot-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 16l-5-5L5 19"/></svg>
+              <img src="day6-geneva.jpg" alt="">
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="goToSlide(4)">Flight info &nbsp;&rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 4: Flight Info ──────────────────────────── -->
+  <div class="slide" id="slide-4">
+    <div class="card">
+      <p class="eyebrow">Getting There</p>
+      <h2 style="font-size:clamp(1.6rem,5vw,2.2rem); margin-bottom:20px;">Flight details</h2>
+
+      <!-- Outbound -->
+      <div class="flight-row">
+        <div class="flight-col">
+          <div class="flight-code">LHR</div>
+          <div class="flight-city">London</div>
+          <div class="flight-meta"></div>
+        </div>
+        <div class="flight-arrow">
+          <svg width="28" height="10" viewBox="0 0 32 12" fill="none">
+            <path d="M0 6h28M22 1l6 5-6 5" stroke="#2D3E50" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:4px;"><!--FLIGHT NO--></div>
+        </div>
+        <div class="flight-col" style="text-align:right;">
+          <div class="flight-code">ZRH</div>
+          <div class="flight-city">Zurich</div>
+          <div class="flight-meta"><!--ARRIVE--></div>
+        </div>
+      </div>
+
+      <!-- Geneva → Milan -->
+      <div class="flight-row">
+        <div class="flight-col">
+          <div class="flight-code">GVA</div>
+          <div class="flight-city">Geneva</div>
+          <div class="flight-meta"></div>
+        </div>
+        <div class="flight-arrow">
+          <svg width="28" height="10" viewBox="0 0 32 12" fill="none">
+            <path d="M0 6h28M22 1l6 5-6 5" stroke="#2D3E50" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:4px;"><!--FLIGHT NO--></div>
+        </div>
+        <div class="flight-col" style="text-align:right;">
+          <div class="flight-code">MXP</div>
+          <div class="flight-city">Milan</div>
+          <div class="flight-meta"><!--ARRIVE--></div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" onclick="goToSlide(5)" style="margin-top:14px;">
+        Next &nbsp;&rarr;
+      </button>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 5: Photos & Links ───────────────────────── -->
+  <div class="slide" id="slide-5">
+    <div class="card">
+      <div class="heart" style="font-size:2.4rem;margin:6px 0 16px;">♡</div>
+      <h2 style="font-size:clamp(1.6rem,5vw,2.2rem); margin-bottom:14px;">A place to share<br>all our photos</h2>
+      <div class="divider"></div>
+
+      <!-- Large photo-album button with a Swiss-lake backdrop -->
+      <a
+        href="https://photos.app.goo.gl/KwqdE8vsDMohAGAi8"
+        target="_blank"
+        rel="noopener"
+        class="album-hero"
+        aria-label="Join the photo album"
+      >
+        <img src="day3-oeschinensee.webp" alt="">
+        <span class="album-scrim"></span>
+        <span class="album-label">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="14" height="14" rx="2.5"/>
+            <circle cx="7.8" cy="8" r="1.5"/>
+            <path d="M3 13.5 6.5 10.5 11 14.5"/>
+            <path d="M21 7v12a2 2 0 0 1-2 2H7"/>
+          </svg>
+          Join the photo album
+        </span>
+      </a>
+
+      <button class="btn btn-outline" onclick="goToSlide(6)">
+        One last thing &nbsp;&rarr;
+      </button>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 6: Love Note ────────────────────────────── -->
+  <div class="slide" id="slide-6">
+    <div class="card">
+      <p style="
+        font-family:'Cormorant Garamond',serif;
+        font-size:clamp(2rem,6vw,3rem);
+        line-height:1.3;
+        color:var(--slate);
+        font-weight:500;
+        margin-bottom:14px;
+      ">
+        Happy Birthday,<br><span style="font-style:italic;color:var(--gold);">Ally</span>!!
+      </p>
+      <p style="
+        font-family:'Cormorant Garamond',serif;
+        font-size:clamp(1.1rem,3.5vw,1.4rem);
+        line-height:1.6;
+        color:var(--gold);
+        font-weight:300;
+        font-style:italic;
+        margin-bottom:24px;
+      ">
+        sorry, no gift card…
+      </p>
+      <div class="divider"></div>
+      <div class="heart" style="font-size:clamp(4rem,14vw,6rem); color:#E23E54; margin-top:22px; line-height:1;">♥</div>
+    </div>
+  </div>
+
+</div><!-- /stage -->
+
+<!-- Nav dots -->
+<div class="nav-dots" id="navDots"></div>
+
+<script>
+  // ── State ─────────────────────────────────────────────────
+  const TOTAL = 7;
+  let current = 0;
+  let animating = false;
+
+  // ── Particles ──────────────────────────────────────────────
+  (function spawnParticles() {
+    const container = document.getElementById('particles');
+    const sizes = [3,4,5,3,6,4,3,5];
+    const count = 18;
+    for (let i = 0; i < count; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = sizes[i % sizes.length];
+      p.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${Math.random()*100}%;
+        animation-duration:${12 + Math.random()*14}s;
+        animation-delay:${Math.random()*-20}s;
+        opacity:${0.3 + Math.random()*0.5};
+      `;
+      container.appendChild(p);
+    }
+  })();
+
+  // ── Nav Dots ──────────────────────────────────────────────
+  const dotLabels = ['Gift','Reveal','Tickets','Itinerary','Flights','Photos','Love'];
+  const dotsContainer = document.getElementById('navDots');
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', dotLabels[i]);
+    d.onclick = () => goToSlide(i);
+    d.style.cursor = 'pointer';
+    dotsContainer.appendChild(d);
+  }
+
+  function updateDots(n) {
+    document.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === n);
+    });
+  }
+
+  // ── Slide Navigation ──────────────────────────────────────
+  function goToSlide(n) {
+    if (animating || n === current || n < 0 || n >= TOTAL) return;
+    animating = true;
+
+    const prev = document.getElementById('slide-' + current);
+    const next = document.getElementById('slide-' + n);
+
+    prev.classList.add('exit-up');
+    prev.classList.remove('active');
+
+    setTimeout(() => {
+      prev.classList.remove('exit-up');
+    }, 600);
+
+    setTimeout(() => {
+      next.classList.add('active');
+      current = n;
+      updateDots(n);
+      updateBackBtn(n);
+      animating = false;
+    }, 160);
+
+    // Gift-opening sequence on the boarding-pass slide
+    if (n === 2) {
+      const s = document.getElementById('slide-2');
+      resetReveal();                    // blank the headline so the surprise isn't spoiled on re-entry
+      s.classList.remove('opening');
+      void s.offsetWidth;               // force reflow so the animation can replay
+      setTimeout(() => s.classList.add('opening'), 240);
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // start typing only after the box has opened and the tickets have settled
+      setTimeout(typeReveal, reduce ? 260 : 2000);
+    }
+    // reset the launch-pop + type out the message when we land on the reveal slide
+    if (n === 1) {
+      document.querySelector('#slide-1 .gift-open-btn')?.classList.remove('launching');
+      resetReveal1();
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      setTimeout(typeReveal1, reduce ? 220 : 520);
+      setTimeout(() => {
+        const rc = document.getElementById('revealCard');
+        rc.classList.add('shine-once');
+        setTimeout(() => rc.classList.remove('shine-once'), 1000);
+      }, 400);
+    }
+  }
+
+  // "Open your surprise" → pop the box, then cut to the opening scene
+  function openGift() {
+    if (animating) return;
+    const btn = document.querySelector('#slide-1 .gift-open-btn');
+    btn.classList.add('launching');
+    setTimeout(() => goToSlide(2), 380);
+  }
+
+  // ── Typewriter reveal (slide 2: the "don't worry" message) ─
+  let tw1Timer = null;
+  function resetReveal1() {
+    clearTimeout(tw1Timer);
+    const txt = document.querySelector('#slide-1 .tw1-text');
+    const caret = document.querySelector('#slide-1 .tw1-caret');
+    const gift = document.querySelector('#slide-1 .gift-open-reveal');
+    if (txt) txt.textContent = '';
+    if (caret) caret.classList.remove('gone');
+    if (gift) gift.classList.remove('show');
+  }
+  function typeReveal1() {
+    const txt = document.querySelector('#slide-1 .tw1-text');
+    const caret = document.querySelector('#slide-1 .tw1-caret');
+    const gift = document.querySelector('#slide-1 .gift-open-reveal');
+    const p1 = 'Click one more time';
+    const p2 = ' to redeem…';
+    txt.textContent = '';
+
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      txt.textContent = p1 + p2;
+      caret.classList.add('gone'); gift.classList.add('show');
+      return;
+    }
+
+    let i = 0, j = 0;
+    function step1() {
+      if (i < p1.length) {
+        txt.textContent += p1.charAt(i++);
+        tw1Timer = setTimeout(step1, 82);
+      } else {
+        tw1Timer = setTimeout(step2, 82);       // no pause — type straight through
+      }
+    }
+    function step2() {
+      if (j < p2.length) {
+        txt.textContent += p2.charAt(j++);
+        tw1Timer = setTimeout(step2, 68);
+      } else {
+        tw1Timer = setTimeout(() => { caret.classList.add('gone'); gift.classList.add('show'); }, 450);
+      }
+    }
+    step1();
+  }
+
+  // ── Typewriter reveal (slide 3) ───────────────────────────
+  let twTimer = null;
+  function resetReveal() {
+    clearTimeout(twTimer);
+    const q = s => document.querySelector('#slide-2 ' + s);
+    q('.tw-text').textContent = '';
+    q('.tw-swiss').textContent = '';
+    q('.tw-caret').classList.remove('gold', 'gone');
+    q('.dest-sub').classList.remove('show');
+    q('.reveal-cta-wrap').classList.remove('show');
+    const cannon = document.getElementById('cannon');
+    if (cannon) cannon.innerHTML = '';
+  }
+  function typeReveal() {
+    const q = s => document.querySelector('#slide-2 ' + s);
+    const txt = q('.tw-text'), swiss = q('.tw-swiss'), caret = q('.tw-caret');
+    const sub = q('.dest-sub'), cta = q('.reveal-cta-wrap');
+    const p1 = 'Two tickets to', p2 = 'Switzerland';
+    txt.textContent = ''; swiss.textContent = '';
+
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      txt.textContent = p1 + ' '; swiss.textContent = p2;
+      caret.classList.add('gone'); sub.classList.add('show'); cta.classList.add('show');
+      return;
+    }
+
+    let i = 0, j = 0;
+    function step1() {
+      if (i < p1.length) {
+        txt.textContent += p1.charAt(i++);
+        twTimer = setTimeout(step1, 78);
+      } else {
+        caret.classList.add('gold');               // cursor turns gold…
+        twTimer = setTimeout(() => {               // …and holds for the cliffhanger
+          txt.textContent += ' ';
+          step2();
+        }, 1250);
+      }
+    }
+    function step2() {
+      if (j < p2.length) {
+        swiss.textContent += p2.charAt(j++);
+        twTimer = setTimeout(step2, 105);
+      } else {
+        fireCannons();                                 // 🎉 Switzerland! fire the cannons
+        twTimer = setTimeout(() => { caret.classList.add('gone'); sub.classList.add('show'); }, 650);
+        twTimer = setTimeout(() => { cta.classList.add('show'); }, 1350);
+      }
+    }
+    step1();
+  }
+
+  function prevSlide() { goToSlide(current - 1); }
+
+  function updateBackBtn(n) {
+    const btn = document.getElementById('backBtn');
+    btn.classList.toggle('visible', n > 0);
+  }
+
+  // keyboard nav
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goToSlide(current + 1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   prevSlide();
+  });
+
+  // gift card keyboard
+  document.querySelector('.gift-card').addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); claimGift(); }
+  });
+
+  // ── Photo lightbox (itinerary day popouts) ────────────────
+  (function () {
+    const lb        = document.getElementById('lightbox');
+    const lbImg     = document.getElementById('lbImg');
+    const lbMissing = document.getElementById('lbMissing');
+    const lbCaption = document.getElementById('lbCaption');
+
+    function openShot(src, caption) {
+      lbCaption.textContent = caption || '';
+      lbMissing.classList.remove('show');
+      lbImg.classList.remove('missing');
+      lbImg.src = src;                 // triggers load (or error → placeholder)
+      lb.classList.add('show');
+      lb.setAttribute('aria-hidden', 'false');
+    }
+    function closeLb() {
+      lb.classList.remove('show');
+      lb.setAttribute('aria-hidden', 'true');
+    }
+    // big image failed to load → show the "coming soon" placeholder
+    lbImg.addEventListener('error', () => { lbImg.classList.add('missing'); lbMissing.classList.add('show'); });
+
+    document.querySelectorAll('.day-shot').forEach(btn => {
+      const thumb = btn.querySelector('img');
+      if (thumb) thumb.addEventListener('error', () => thumb.classList.add('missing')); // thumbnail → icon fallback
+      btn.addEventListener('click', () => openShot(btn.dataset.img, btn.dataset.caption));
+    });
+
+    document.getElementById('lbClose').addEventListener('click', closeLb);
+    lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && lb.classList.contains('show')) closeLb(); });
+  })();
+
+  // ── "Redeem" loader: simple spinner, then a slow fade to the reveal ─
+  let redeeming = false;
+  function claimGift() {
+    if (redeeming || animating || current !== 0) return;
+    redeeming = true;
+    const ov = document.getElementById('redeemOverlay');
+    ov.classList.add('show');
+    ov.setAttribute('aria-hidden', 'false');
+
+    const HOLD = matchMedia('(prefers-reduced-motion: reduce)').matches ? 500 : 2000;
+    setTimeout(() => {
+      if (!redeeming) return;
+      redeeming = false;
+      // swap to the reveal slide *behind* the still-opaque overlay, then let the
+      // overlay fade away slowly (1s) so it gently dissolves into the next slide
+      goToSlide(1);
+      setTimeout(() => {
+        ov.classList.remove('show');
+        ov.setAttribute('aria-hidden', 'true');
+      }, 240);
+    }, HOLD);
+  }
+
+  // ── Swiss confetti cannons (fire when "Switzerland" lands) ─
+  function fireCannons() {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const container = document.getElementById('cannon');
+    if (!container) return;
+    container.innerHTML = '';
+    const reds = ['#D52B1E', '#C8102E', '#E03A2A'];
+
+    // muzzle flashes
+    ['left', 'right'].forEach(side => {
+      const f = document.createElement('div');
+      f.className = 'cannon-flash ' + side;
+      container.appendChild(f);
+    });
+
+    const perCannon = 64;
+    ['left', 'right'].forEach(side => {
+      const dir = side === 'left' ? 1 : -1;            // fire toward the centre
+      for (let k = 0; k < perCannon; k++) {
+        const wrap = document.createElement('div');
+        wrap.className = 'cfx ' + side;
+        const bit = document.createElement('div');
+        bit.className = 'cfx-bit';
+
+        const dx   = dir * (40 + Math.random() * 440);  // horizontal spray
+        const peak = -(230 + Math.random() * 320);      // height of the arc
+        const drop = 60 + Math.random() * 240;          // fall after apex
+        const rot  = (Math.random() * 900 - 450) + 'deg';
+        const dur  = 2.4 + Math.random() * 1.8;          // ~2x longer flight/linger
+        const delay = Math.random() * 0.7;               // cannons keep firing a bit longer
+
+        wrap.style.setProperty('--dx', dx + 'px');
+        bit.style.setProperty('--peak', peak + 'px');
+        bit.style.setProperty('--drop', drop + 'px');
+        bit.style.setProperty('--rot', rot);
+        wrap.style.animationDuration = bit.style.animationDuration = dur + 's';
+        wrap.style.animationDelay = bit.style.animationDelay = delay + 's';
+
+        if (Math.random() < 0.16) {
+          bit.classList.add('cfx-cross');               // little Swiss flag
+        } else {
+          const white = Math.random() < 0.5;
+          const w = 6 + Math.random() * 7;
+          const h = 8 + Math.random() * 9;
+          bit.style.width = w + 'px';
+          bit.style.height = h + 'px';
+          bit.style.background = white ? '#ffffff' : reds[Math.floor(Math.random() * reds.length)];
+          if (Math.random() < 0.35) bit.style.borderRadius = '50%';
+          if (white) bit.style.boxShadow = '0 1px 2px rgba(45,62,80,0.18)';
+        }
+        wrap.appendChild(bit);
+        container.appendChild(wrap);
+      }
+    });
+    setTimeout(() => { container.innerHTML = ''; }, 6800);
+  }
+</script>
+</body>
+</html>
