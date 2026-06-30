@@ -728,7 +728,14 @@
     /* ── ITINERARY (full page, no scroll, roomy & readable) ── */
     .itin-page { padding: 36px 44px; max-width: 660px; }
     .itin-page .eyebrow { margin-bottom: 9px; }
-    .itin-title { font-size: clamp(1.8rem, 5vw, 2.4rem); margin-bottom: 20px; }
+    .itin-title { font-size: clamp(1.8rem, 5vw, 2.4rem); margin-bottom: 14px; }
+    .itin-hint {
+      display: flex; align-items: center; justify-content: flex-end; gap: 6px;
+      margin: -2px 2px 10px 0;
+      font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); opacity: 0.9;
+    }
+    .itin-hint svg { color: var(--gold); flex-shrink: 0; }
     .itin-page .itin-list { margin-bottom: 22px; }
     .itin-page .itin-item { align-items: center; gap: 18px; padding: 12px 0; }
     .itin-page .itin-day { font-size: 26px; min-width: 46px; }
@@ -1117,6 +1124,10 @@
     <div class="card itin-page">
       <p class="eyebrow">The Plan</p>
       <h2 class="itin-title">Day by day</h2>
+      <p class="itin-hint">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>
+        Tap a photo to expand
+      </p>
 
       <!--
         PHOTO POPOUTS — drop images into C:\Users\hiitz\.claude\sessions\ matching
