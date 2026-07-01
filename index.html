@@ -1646,8 +1646,16 @@
     q('.tw-text').textContent = '';
     q('.tw-swiss').textContent = '';
     q('.tw-caret').classList.remove('gold', 'gone');
-    q('.dest-sub').classList.remove('show');
-    q('.reveal-cta-wrap').classList.remove('show');
+    // hide the 2nd-surprise subtitle + CTA INSTANTLY on reset, so re-entering the
+    // slide never shows a slow fade-out of "…and then to Italy" before typing restarts
+    [q('.dest-sub'), q('.reveal-cta-wrap')].forEach(el => {
+      el.classList.remove('show');
+      el.style.transition = 'none';
+      el.style.opacity = '0';
+      el.style.visibility = 'hidden';
+      void el.offsetWidth;                       // snap to hidden…
+      el.style.transition = el.style.opacity = el.style.visibility = '';   // …then restore for the next reveal
+    });
     const cannon = document.getElementById('cannon');
     if (cannon) cannon.innerHTML = '';
   }
