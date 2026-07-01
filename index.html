@@ -317,6 +317,9 @@
       /* image is cropped tight to the card; tiny zoom hides its rounded-corner edges */
       transform: scale(1.05);
     }
+    /* recreation stays hidden (no flash before the photo loads); only appears if the photo 404s */
+    .lulu-fallback { display: none; }
+    .gift-card.img-failed .lulu-fallback { display: contents; }
 
     /* ── BIRTHDAY GREETING (slide 1) ──────────────────────── */
     .bday-greeting {
@@ -985,6 +988,8 @@
     <div class="card">
       <p class="bday-greeting">Happy Birthday, <span>Ally</span></p>
       <div class="gift-card lulu-card" onclick="claimGift()" role="button" tabindex="0" aria-label="Tap to reveal your gift">
+        <!-- fallback recreation: hidden by default, only shown if the real photo fails to load -->
+        <div class="lulu-fallback">
         <svg class="lulu-waves" viewBox="0 0 320 200" preserveAspectRatio="none" aria-hidden="true">
           <defs>
             <pattern id="luluWave" width="40" height="20" patternUnits="userSpaceOnUse">
@@ -1004,11 +1009,11 @@
         </div>
 
         <div class="lulu-footer">SHOP IN-STORE AND ONLINE</div>
+        </div><!-- /lulu-fallback -->
 
-        <!-- Your exact uploaded card. Save it next to this file as lululemon-card.png
-             (or .jpg). Until then, the recreation above shows as a fallback. -->
+        <!-- Your real uploaded card. If it ever fails to load, the fallback recreation above is shown instead. -->
         <img class="lulu-photo" src="lululemon-card.png.PNG" alt="lululemon gift card"
-             onerror="this.style.display='none';">
+             onerror="this.style.display='none'; this.closest('.gift-card').classList.add('img-failed');">
 
         <div class="gc-tap-hint"><span>Tap to reveal</span></div>
       </div>
