@@ -913,6 +913,26 @@
     .card-scroll { max-height: 68vh; overflow-y: auto; scrollbar-width: none; }
     .card-scroll::-webkit-scrollbar { display: none; }
 
+    /* ── CORNER TULIP BOUQUETS (final slide only) ─────────── */
+    .corner-bouquets {
+      position: fixed; inset: 0; z-index: 5; pointer-events: none;
+      opacity: 0; transition: opacity 1s ease;
+    }
+    .corner-bouquets.show { opacity: 1; }
+    .corner-bouquet { position: absolute; bottom: 0; width: 200px; }
+    /* rooted in each bottom corner, tilted diagonally in toward the centre (right = mirror of left) */
+    .corner-bouquet.left  { left: 0;  transform-origin: bottom left;  transform: rotate(18deg); }
+    .corner-bouquet.right { right: 0; transform-origin: bottom right; transform: rotate(-18deg); }
+    .corner-bouquet.right > svg { transform: scaleX(-1); }   /* mirror the bouquet in place */
+
+    .tl-stem  { transform-box: fill-box; transform-origin: 50% 100%; animation: tlSway 4s ease-in-out infinite; }
+    .tl-stem.s2 { animation-duration: 4.9s; animation-delay: -1.3s; }
+    .tl-stem.s3 { animation-duration: 3.6s; animation-delay: -0.7s; }
+    .tl-green { transform-box: fill-box; transform-origin: 50% 100%; animation: tlSwaySoft 5.2s ease-in-out infinite; }
+    .tl-green.g2 { animation-duration: 4.4s; animation-delay: -1.8s; }
+    @keyframes tlSway     { 0%,100% { transform: rotate(-3.5deg); } 50% { transform: rotate(3.5deg); } }
+    @keyframes tlSwaySoft { 0%,100% { transform: rotate(2.6deg); }  50% { transform: rotate(-2.6deg); } }
+
     /* ── RESPONSIVE ───────────────────────────────────────── */
     @media (max-width: 480px) {
       .slide { padding: 16px 12px; }
@@ -936,11 +956,16 @@
       .itin-page .itin-note { font-size: 11.5px; line-height: 1.4; }
       .itin-page .day-shot { width: 46px; height: 46px; border-radius: 11px; }
       .itin-page .btn-group .btn, .itin-page .btn { padding: 13px 14px; font-size: 12.5px; }
+
+      /* smaller bouquets so they sit neatly in the phone's bottom corners */
+      .corner-bouquet { width: 128px; }
+      .corner-bouquet.left  { transform: rotate(18deg); }
+      .corner-bouquet.right { transform: rotate(-18deg); }
     }
 
     /* ── REDUCED MOTION ───────────────────────────────────── */
     @media (prefers-reduced-motion: reduce) {
-      .gift-box, .bg, .blob, .particle, .heart { animation: none !important; }
+      .gift-box, .bg, .blob, .particle, .heart, .tl-stem, .tl-green { animation: none !important; }
     }
   </style>
 </head>
@@ -953,6 +978,89 @@
 <div class="blob blob-3"></div>
 <div class="particles" id="particles"></div>
 <div class="cannon-layer" id="cannon"></div>
+
+<!-- Tulip bouquets in the bottom corners (shown only on the final slide) -->
+<div class="corner-bouquets" id="cornerBouquets" aria-hidden="true">
+  <div class="corner-bouquet left">
+    <svg viewBox="0 0 140 172" width="100%" aria-hidden="true">
+      <defs>
+        <linearGradient id="tlStem" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#7FB07A"/><stop offset="1" stop-color="#4E8A54"/>
+        </linearGradient>
+      </defs>
+      <g class="tl-green g1">
+        <path d="M70,168 C60,120 52,96 44,72" fill="none" stroke="#6BA168" stroke-width="2.4" stroke-linecap="round"/>
+        <g fill="#7BB177">
+          <ellipse cx="52" cy="112" rx="8" ry="3.4" transform="rotate(-38 52 112)"/>
+          <ellipse cx="49" cy="98" rx="9" ry="3.6" transform="rotate(-30 49 98)"/>
+          <ellipse cx="46" cy="84" rx="8" ry="3.4" transform="rotate(-24 46 84)"/>
+        </g>
+      </g>
+      <g class="tl-green g2">
+        <path d="M70,168 C82,124 92,102 100,80" fill="none" stroke="#6BA168" stroke-width="2.4" stroke-linecap="round"/>
+        <g fill="#7BB177">
+          <ellipse cx="88" cy="116" rx="8" ry="3.4" transform="rotate(40 88 116)"/>
+          <ellipse cx="93" cy="100" rx="9" ry="3.6" transform="rotate(32 93 100)"/>
+          <ellipse cx="97" cy="88" rx="8" ry="3.4" transform="rotate(26 97 88)"/>
+        </g>
+      </g>
+      <g class="tl-stem s3">
+        <path d="M70,168 C80,120 84,96 82,66" fill="none" stroke="url(#tlStem)" stroke-width="3.4" stroke-linecap="round"/>
+        <path d="M82,112 C96,104 100,92 101,82 C90,86 84,96 82,110 Z" fill="#5C9A5C"/>
+        <g transform="translate(82,60)"><path d="M-11,-4 C-11,8 -6,15 0,15 C6,15 11,8 11,-4 C11,-11 8,-17 6,-11 C5,-6 2,-8 2,-14 C2,-20 -2,-20 -2,-14 C-2,-8 -5,-6 -6,-11 C-8,-17 -11,-11 -11,-4 Z" fill="#F0A9C6"/></g>
+      </g>
+      <g class="tl-stem s2">
+        <path d="M70,168 C60,124 55,102 57,72" fill="none" stroke="url(#tlStem)" stroke-width="3.4" stroke-linecap="round"/>
+        <path d="M57,118 C43,110 39,98 38,88 C49,92 55,102 57,116 Z" fill="#5C9A5C"/>
+        <g transform="translate(57,66)"><path d="M-11,-4 C-11,8 -6,15 0,15 C6,15 11,8 11,-4 C11,-11 8,-17 6,-11 C5,-6 2,-8 2,-14 C2,-20 -2,-20 -2,-14 C-2,-8 -5,-6 -6,-11 C-8,-17 -11,-11 -11,-4 Z" fill="#E2647A"/></g>
+      </g>
+      <g class="tl-stem s1">
+        <path d="M70,168 C70,118 70,92 70,52" fill="none" stroke="url(#tlStem)" stroke-width="3.6" stroke-linecap="round"/>
+        <path d="M70,110 C56,102 51,90 50,80 C61,84 67,94 70,108 Z" fill="#5C9A5C"/>
+        <g transform="translate(70,44)"><path d="M-12,-4 C-12,9 -6,17 0,17 C6,17 12,9 12,-4 C12,-12 9,-19 7,-12 C6,-6 2,-9 2,-15 C2,-22 -2,-22 -2,-15 C-2,-9 -6,-6 -7,-12 C-9,-19 -12,-12 -12,-4 Z" fill="#E8799F"/></g>
+      </g>
+      <path d="M62,150 C66,158 74,158 78,150 L76,164 C72,160 68,160 64,164 Z" fill="#C9A24B"/>
+      <circle cx="70" cy="152" r="3.4" fill="#E0BE68"/>
+    </svg>
+  </div>
+  <div class="corner-bouquet right">
+    <svg viewBox="0 0 140 172" width="100%" aria-hidden="true">
+      <g class="tl-green g1">
+        <path d="M70,168 C60,120 52,96 44,72" fill="none" stroke="#6BA168" stroke-width="2.4" stroke-linecap="round"/>
+        <g fill="#7BB177">
+          <ellipse cx="52" cy="112" rx="8" ry="3.4" transform="rotate(-38 52 112)"/>
+          <ellipse cx="49" cy="98" rx="9" ry="3.6" transform="rotate(-30 49 98)"/>
+          <ellipse cx="46" cy="84" rx="8" ry="3.4" transform="rotate(-24 46 84)"/>
+        </g>
+      </g>
+      <g class="tl-green g2">
+        <path d="M70,168 C82,124 92,102 100,80" fill="none" stroke="#6BA168" stroke-width="2.4" stroke-linecap="round"/>
+        <g fill="#7BB177">
+          <ellipse cx="88" cy="116" rx="8" ry="3.4" transform="rotate(40 88 116)"/>
+          <ellipse cx="93" cy="100" rx="9" ry="3.6" transform="rotate(32 93 100)"/>
+          <ellipse cx="97" cy="88" rx="8" ry="3.4" transform="rotate(26 97 88)"/>
+        </g>
+      </g>
+      <g class="tl-stem s3">
+        <path d="M70,168 C80,120 84,96 82,66" fill="none" stroke="url(#tlStem)" stroke-width="3.4" stroke-linecap="round"/>
+        <path d="M82,112 C96,104 100,92 101,82 C90,86 84,96 82,110 Z" fill="#5C9A5C"/>
+        <g transform="translate(82,60)"><path d="M-11,-4 C-11,8 -6,15 0,15 C6,15 11,8 11,-4 C11,-11 8,-17 6,-11 C5,-6 2,-8 2,-14 C2,-20 -2,-20 -2,-14 C-2,-8 -5,-6 -6,-11 C-8,-17 -11,-11 -11,-4 Z" fill="#F0A9C6"/></g>
+      </g>
+      <g class="tl-stem s2">
+        <path d="M70,168 C60,124 55,102 57,72" fill="none" stroke="url(#tlStem)" stroke-width="3.4" stroke-linecap="round"/>
+        <path d="M57,118 C43,110 39,98 38,88 C49,92 55,102 57,116 Z" fill="#5C9A5C"/>
+        <g transform="translate(57,66)"><path d="M-11,-4 C-11,8 -6,15 0,15 C6,15 11,8 11,-4 C11,-11 8,-17 6,-11 C5,-6 2,-8 2,-14 C2,-20 -2,-20 -2,-14 C-2,-8 -5,-6 -6,-11 C-8,-17 -11,-11 -11,-4 Z" fill="#E2647A"/></g>
+      </g>
+      <g class="tl-stem s1">
+        <path d="M70,168 C70,118 70,92 70,52" fill="none" stroke="url(#tlStem)" stroke-width="3.6" stroke-linecap="round"/>
+        <path d="M70,110 C56,102 51,90 50,80 C61,84 67,94 70,108 Z" fill="#5C9A5C"/>
+        <g transform="translate(70,44)"><path d="M-12,-4 C-12,9 -6,17 0,17 C6,17 12,9 12,-4 C12,-12 9,-19 7,-12 C6,-6 2,-9 2,-15 C2,-22 -2,-22 -2,-15 C-2,-9 -6,-6 -7,-12 C-9,-19 -12,-12 -12,-4 Z" fill="#E8799F"/></g>
+      </g>
+      <path d="M62,150 C66,158 74,158 78,150 L76,164 C72,160 68,160 64,164 Z" fill="#C9A24B"/>
+      <circle cx="70" cy="152" r="3.4" fill="#E0BE68"/>
+    </svg>
+  </div>
+</div>
 
 <!-- Back button -->
 <button class="back-btn" id="backBtn" onclick="prevSlide()" aria-label="Go back">
@@ -1440,6 +1548,7 @@
       current = n;
       updateDots(n);
       updateBackBtn(n);
+      document.getElementById('cornerBouquets').classList.toggle('show', n === 6);
       animating = false;
     }, 160);
 
