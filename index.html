@@ -1489,6 +1489,7 @@
   const TOTAL = 7;
   let current = 0;
   let animating = false;
+  let bdayConfettiTimer = null;
 
   // ── Particles ──────────────────────────────────────────────
   (function spawnParticles() {
@@ -1532,6 +1533,7 @@
   function goToSlide(n) {
     if (animating || n === current || n < 0 || n >= TOTAL) return;
     animating = true;
+    clearTimeout(bdayConfettiTimer);   // cancel any pending final-slide confetti
 
     const prev = document.getElementById('slide-' + current);
     const next = document.getElementById('slide-' + n);
@@ -1574,6 +1576,11 @@
         rc.classList.add('shine-once');
         setTimeout(() => rc.classList.remove('shine-once'), 1000);
       }, 400);
+    }
+
+    // Final slide: fire the Swiss confetti a beat after "Happy Birthday" appears
+    if (n === 6) {
+      bdayConfettiTimer = setTimeout(fireCannons, 1200);
     }
   }
 
